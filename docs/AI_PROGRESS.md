@@ -119,5 +119,6 @@ Bug: "3 nm graphene oxide sheet" got 12 ligands, because reset() restores the la
 - [ ] Test the setup from a fresh clone; then make the repo public
 - Audit: no secrets in history; HierGO is GPL-3 with its LICENSE; the project LICENSE is still 'NOT YET CHOSEN' (team decision).
 - Setup tested from a fresh clone: the uv route takes 27 s; plain python3.12 without uv takes about 1 min; with only system Python 3.9 it stops with a clear message.
-- [ ] AI key box in the UI (user request 10): provider/model/password + Connect (a test call); session-only by default, optional save to .env; the key is never shown or logged
+- [x] AI key box in the UI (user request 10): provider/model/password + Connect (a test call); session-only by default, optional save to .env; the key is never shown or logged
 - [ ] Push and make the repo public
+- Key box tested in a browser on a fresh clone with no key: the badge said offline; a wrong key was rejected with a clear message; the real key connected (the badge changed to gpt-6-luna); the key is not in the page HTML; the AI answered. 279 tests passed.
