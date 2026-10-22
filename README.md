@@ -2,6 +2,10 @@
 
 <img src="docs/buddy_logo.png" alt="Buddy Builder logo" width="140" align="right">
 
+> **New here (judges, teammates)?** Start with **[GETTING_STARTED.md](GETTING_STARTED.md)**:
+> `./setup.sh` then `./start.sh` (Windows: `setup.bat`, `start.bat`), and a five-minute tour,
+> including the **Ask Buddy** AI chat that builds and edits models from plain English.
+
 **Buddy Builder** is a Jupyter/ipywidgets tool, intended for nanoHUB, that builds crystalline
 nanoparticles, nanorods, slabs and **channels**, and **carbon nanomaterials** (graphene and
 graphene oxide with HierGO-style defects, nanotubes, fullerenes and carbon
@@ -12,7 +16,7 @@ GROMACS (`.pdb`, and `.mol2` with suggested GAFF2 types), plus extended XYZ and
 an explicit `topology.json`.
 
 It implements the hackathon specification in
-`../nanohub_crystal_ligand_builder_workflow_no_github.md`. What was built, what
+the team's nanoHUB workflow specification (not included in this repository). What was built, what
 changed relative to that document, and what was verified are recorded in
 [docs/implementation_log.md](docs/implementation_log.md).
 

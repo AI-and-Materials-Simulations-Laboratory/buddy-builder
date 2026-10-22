@@ -111,3 +111,9 @@ Bug: "3 nm graphene oxide sheet" got 12 ligands, because reset() restores the la
 - [x] git init in buddy-builder; make sure .env/.venv/caches are ignored; scan for secrets
 - [x] gh repo create AI-and-Materials-Simulations-Laboratory/buddy-builder --private, then push main (no Claude co-author)
 - Pushed: https://github.com/AI-and-Materials-Simulations-Laboratory/buddy-builder (private, main, commit 11bcbfe, 520 files; .env is not in the repo).
+
+## Public + onboarding (user request 9)
+- [ ] Pre-public audit: secrets in all commits, private links, licence of bundled files
+- [ ] setup.sh (macOS/Linux) + setup.bat (Windows): Python 3.12 venv (via uv when available), install requirements, create .env from .env.example, self-check
+- [ ] GETTING_STARTED.md (judges + team): 3 commands, a 5-minute demo script, AI key, troubleshooting; README links to it at the top
+- [ ] Test the setup from a fresh clone; then make the repo public
