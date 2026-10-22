@@ -1,0 +1,13 @@
+# Versions this tool was tested with (Windows 11, Python 3.12.10, 2026-10-21).
+# Other recent versions are likely to work; re-pin after testing on nanoHUB.
+numpy==2.5.4
+scipy==1.18.1
+ase==3.29.0
+rdkit==2026.9.1
+gsd==5.0.1
+ipywidgets==8.1.9
+spglib==2.8.0   # Materials Project structures -> conventional cell (optional; falls back to the primitive cell)
+# Local development only (nanoHUB provides its own Jupyter):
+notebook==7.6.3
+pytest==9.1.1
+voila==0.5.13   # start.py / start.sh: the app view without code cells (optional)

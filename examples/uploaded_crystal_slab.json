@@ -1,0 +1,66 @@
+{
+  "format_version": "0.1",
+  "material": {
+    "source": "uploaded_file",
+    "preset_id": null,
+    "file_format": "cif",
+    "filename": "mg_hcp_fully_occupied.cif",
+    "sha256": null
+  },
+  "geometry": {
+    "shape": "slab",
+    "slab_length_nm": 3.0,
+    "slab_width_nm": 3.0,
+    "thickness_mode": "layers",
+    "layers": 3,
+    "thickness_nm": 1.0,
+    "miller": [
+      0,
+      0,
+      1
+    ],
+    "termination_index": 0,
+    "vacuum_A": 30.0,
+    "max_atoms": 100000,
+    "pbc": [
+      true,
+      true,
+      false
+    ]
+  },
+  "ligand": {
+    "smiles": "OCC",
+    "anchor_atom_index": 0,
+    "binding_template": "geometric",
+    "distance_A": 2.5,
+    "surface_species": [
+      "Mg"
+    ],
+    "conformers": 1,
+    "orientation": "random_azimuth",
+    "seed": 42
+  },
+  "coverage": {
+    "mode": "count",
+    "target": 6,
+    "region": "top",
+    "distribution": "evenly_spaced",
+    "min_separation_A": 0.0,
+    "clash_alpha": 0.7,
+    "max_attempts": 50000,
+    "seed": 42
+  },
+  "export": {
+    "targets": [
+      "hoomd_gsd",
+      "lammps_data",
+      "extxyz",
+      "pdb",
+      "mol2"
+    ],
+    "fidelity": "structure_topology",
+    "include_hydrogens": true,
+    "freeze_substrate": false,
+    "charges": "unassigned"
+  }
+}

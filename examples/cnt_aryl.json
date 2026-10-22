@@ -1,0 +1,101 @@
+{
+  "format_version": "0.1",
+  "material": {
+    "source": "carbon"
+  },
+  "geometry": {
+    "vacuum_A": 20.0,
+    "max_atoms": 100000
+  },
+  "ligand": {
+    "smiles": "c1ccc(cc1)C(=O)O",
+    "anchor_atom_index": 0,
+    "binding_template": "C_basal",
+    "distance_A": null,
+    "surface_species": null,
+    "conformers": 1,
+    "orientation": "random_azimuth",
+    "seed": 42,
+    "conformer_mode": "etkdg",
+    "library_id": "carboxyphenyl"
+  },
+  "coverage": {
+    "mode": "count",
+    "target": 10,
+    "region": "side",
+    "distribution": "evenly_spaced",
+    "min_separation_A": 0.0,
+    "clash_alpha": 0.7,
+    "max_attempts": 50000,
+    "seed": 42
+  },
+  "export": {
+    "targets": [
+      "hoomd_gsd",
+      "lammps_data",
+      "extxyz",
+      "pdb",
+      "mol2"
+    ],
+    "fidelity": "structure_topology",
+    "include_hydrogens": true,
+    "freeze_substrate": false,
+    "charges": "unassigned",
+    "residue_scheme": "groups"
+  },
+  "carbon": {
+    "kind": "nanotube",
+    "periodic": true,
+    "edge_termination": "H",
+    "length_nm": 5.0,
+    "width_nm": 5.0,
+    "layers": 1,
+    "layer_spacing_A": 3.35,
+    "stacking": "AB",
+    "cnt_n": 10,
+    "cnt_m": 10,
+    "cnt_length_nm": 5.0,
+    "cnt_walls": 1,
+    "wall_spacing_A": 3.4,
+    "sphere_type": "fullerene",
+    "fullerene_order": 1,
+    "onion_shells": 3,
+    "vacancy_percent": 0.0,
+    "hole_size": "mixed",
+    "hole_min_atoms": 1,
+    "hole_max_atoms": 30,
+    "hole_shapes": "random_growth",
+    "pore_count": 0,
+    "pore_diameter_nm": 1.0,
+    "stone_wales_percent": 0.0,
+    "flower_percent": 0.0,
+    "rupture_count": 0,
+    "rupture_length": 4,
+    "keep_hanging_carbons": false,
+    "oxygen_percent": 0.0,
+    "oxidation_profile": "fresh",
+    "hydroxyl_epoxy_ratio": "2:1",
+    "paired_hydroxyl_fraction": 0.7,
+    "custom_fractions": {
+      "hydroxyl": 0.4,
+      "epoxy": 0.3,
+      "edge_hydroxyl": 0.05,
+      "carbonyl": 0.1,
+      "carboxyl": 0.1,
+      "ether": 0.05
+    },
+    "oxidation_pattern": "uniform",
+    "oxidation_faces": "both",
+    "domain_count": 3,
+    "domain_diameter_nm": 2.0,
+    "tile_grid": [
+      3,
+      3
+    ],
+    "tile_oxygen_min": 0.0,
+    "tile_oxygen_max": 60.0,
+    "oxidize_all_layers": false,
+    "pyramidalize": true,
+    "seed": 7
+  }
+}

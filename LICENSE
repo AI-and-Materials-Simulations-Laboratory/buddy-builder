@@ -1,0 +1,9 @@
+LICENSE NOT YET CHOSEN
+
+The project team must choose a license before this tool is published on
+nanoHUB, and replace this file with its full text.
+
+Third-party software used at run time keeps its own license: ASE (LGPL-2.1+),
+RDKit (BSD-3-Clause), GSD (BSD-2-Clause), NumPy and SciPy (BSD-3-Clause),
+ipywidgets (BSD-3-Clause), and 3Dmol.js (BSD-3-Clause, loaded from cdnjs in the
+user's browser).

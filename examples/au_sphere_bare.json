@@ -1,0 +1,52 @@
+{
+  "format_version": "0.1",
+  "material": {
+    "source": "preset",
+    "preset_id": "Au_fcc",
+    "lattice_overrides_A": {}
+  },
+  "geometry": {
+    "shape": "sphere",
+    "diameter_nm": 3.0,
+    "vacuum_A": 30.0,
+    "max_atoms": 100000,
+    "pbc": [
+      false,
+      false,
+      false
+    ]
+  },
+  "ligand": {
+    "smiles": "SCCO",
+    "anchor_atom_index": 0,
+    "binding_template": "Au_thiolate",
+    "distance_A": null,
+    "surface_species": null,
+    "conformers": 1,
+    "orientation": "random_azimuth",
+    "seed": 42
+  },
+  "coverage": {
+    "mode": "count",
+    "target": 0,
+    "region": "entire_surface",
+    "distribution": "distributed_random",
+    "min_separation_A": 0.0,
+    "clash_alpha": 0.7,
+    "max_attempts": 50000,
+    "seed": 42
+  },
+  "export": {
+    "targets": [
+      "hoomd_gsd",
+      "lammps_data",
+      "extxyz",
+      "pdb",
+      "mol2"
+    ],
+    "fidelity": "structure_topology",
+    "include_hydrogens": true,
+    "freeze_substrate": false,
+    "charges": "unassigned"
+  }
+}

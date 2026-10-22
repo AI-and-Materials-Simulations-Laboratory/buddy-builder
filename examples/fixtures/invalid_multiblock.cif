@@ -1,0 +1,41 @@
+# Test fixture: must be REJECTED. Two structures (data blocks) in one file;
+# ase.io.read() without index=":" silently returns only the last one (Fe).
+data_copper_test
+_cell_length_a       3.61
+_cell_length_b       3.61
+_cell_length_c       3.61
+_cell_angle_alpha    90
+_cell_angle_beta     90
+_cell_angle_gamma    90
+_symmetry_space_group_name_H-M    'P 1'
+
+loop_
+  _atom_site_label
+  _atom_site_type_symbol
+  _atom_site_fract_x
+  _atom_site_fract_y
+  _atom_site_fract_z
+  _atom_site_occupancy
+  Cu1  Cu  0.0  0.0  0.0  1.0
+  Cu2  Cu  0.5  0.5  0.0  1.0
+  Cu3  Cu  0.5  0.0  0.5  1.0
+  Cu4  Cu  0.0  0.5  0.5  1.0
+
+data_iron_test
+_cell_length_a       2.87
+_cell_length_b       2.87
+_cell_length_c       2.87
+_cell_angle_alpha    90
+_cell_angle_beta     90
+_cell_angle_gamma    90
+_symmetry_space_group_name_H-M    'P 1'
+
+loop_
+  _atom_site_label
+  _atom_site_type_symbol
+  _atom_site_fract_x
+  _atom_site_fract_y
+  _atom_site_fract_z
+  _atom_site_occupancy
+  Fe1  Fe  0.0  0.0  0.0  1.0
+  Fe2  Fe  0.5  0.5  0.5  1.0

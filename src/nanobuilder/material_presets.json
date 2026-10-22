@@ -1,0 +1,90 @@
+{
+  "format_version": "1",
+  "default": "Au_fcc",
+  "presets": {
+    "Au_fcc": {
+      "label": "Gold (Au) - FCC",
+      "formula": "Au",
+      "prototype": "fcc",
+      "lattice_A": {"a": 4.08},
+      "free_parameters": ["a"],
+      "space_group": "Fm-3m (225)",
+      "source": "ASE reference state (ase.data.reference_states); also the original workflow default",
+      "priority": "P0"
+    },
+    "Ag_fcc": {
+      "label": "Silver (Ag) - FCC",
+      "formula": "Ag",
+      "prototype": "fcc",
+      "lattice_A": {"a": 4.09},
+      "free_parameters": ["a"],
+      "space_group": "Fm-3m (225)",
+      "source": "ASE reference state (ase.data.reference_states)",
+      "priority": "P0"
+    },
+    "Cu_fcc": {
+      "label": "Copper (Cu) - FCC",
+      "formula": "Cu",
+      "prototype": "fcc",
+      "lattice_A": {"a": 3.61},
+      "free_parameters": ["a"],
+      "space_group": "Fm-3m (225)",
+      "source": "ASE reference state (ase.data.reference_states)",
+      "priority": "P0"
+    },
+    "Fe_bcc": {
+      "label": "Iron (Fe) - BCC",
+      "formula": "Fe",
+      "prototype": "bcc",
+      "lattice_A": {"a": 2.87},
+      "free_parameters": ["a"],
+      "space_group": "Im-3m (229)",
+      "source": "ASE reference state (ase.data.reference_states)",
+      "priority": "P0",
+      "notes": "Alpha iron; magnetic state is outside the geometry model"
+    },
+    "Si_diamond": {
+      "label": "Silicon (Si) - Diamond cubic",
+      "formula": "Si",
+      "prototype": "diamond",
+      "lattice_A": {"a": 5.43},
+      "free_parameters": ["a"],
+      "space_group": "Fd-3m (227)",
+      "source": "ASE reference state (ase.data.reference_states)",
+      "priority": "P0",
+      "notes": "Cut surfaces have dangling bonds; no passivation is applied"
+    },
+    "Mg_hcp": {
+      "label": "Magnesium (Mg) - HCP",
+      "formula": "Mg",
+      "prototype": "hcp",
+      "lattice_A": {"a": 3.21, "c": 5.21},
+      "free_parameters": ["a", "c"],
+      "space_group": "P6_3/mmc (194)",
+      "source": "ASE reference state (ase.data.reference_states)",
+      "priority": "P1",
+      "notes": "Miller indices are 3-index (hkl) in the hexagonal cell"
+    },
+    "Ge_diamond": {
+      "label": "Germanium (Ge) - Diamond cubic",
+      "formula": "Ge",
+      "prototype": "diamond",
+      "lattice_A": {"a": 5.66},
+      "free_parameters": ["a"],
+      "space_group": "Fd-3m (227)",
+      "source": "ASE reference state (ase.data.reference_states)",
+      "priority": "P1"
+    },
+    "NaCl_rocksalt": {
+      "label": "Sodium chloride (NaCl) - Rocksalt",
+      "formula": "NaCl",
+      "prototype": "rocksalt",
+      "lattice_A": {"a": 5.64},
+      "free_parameters": ["a"],
+      "space_group": "Fm-3m (225)",
+      "source": "Common room-temperature literature value (about 5.64 A); verify against a primary source before scientific use",
+      "priority": "P1",
+      "notes": "Surfaces can be polar; no automatic ionic force field or charge balancing"
+    }
+  }
+}

@@ -1,0 +1,10 @@
+#!/bin/sh
+# nanoHUB launcher for the xtalligand Jupyter tool.
+# ILLUSTRATIVE PATTERN (spec H5): the alias, notebook path and environment
+# module (-u anaconda-6) must be checked against the actual nanoHUB setup.
+# -A starts the notebook in AppMode so users see the GUI, not the code.
+
+/usr/bin/invoke_app "$@" \
+  -C "start_jupyter -t -A -T @tool app.ipynb" \
+  -t xtalligand \
+  -u anaconda-6

@@ -1,0 +1,22 @@
+# Test fixture: must be REJECTED. Site 1 is a 50/50 Au/Ag mixed site and
+# site 3 is a Cu site at 0.3 occupancy. ASE alone reads this without error.
+data_disordered_test
+_chemical_formula_sum              'Au0.5 Ag0.5 Cu0.3'
+_cell_length_a       4.0
+_cell_length_b       4.0
+_cell_length_c       4.0
+_cell_angle_alpha    90
+_cell_angle_beta     90
+_cell_angle_gamma    90
+_symmetry_space_group_name_H-M    'P 1'
+
+loop_
+  _atom_site_label
+  _atom_site_type_symbol
+  _atom_site_fract_x
+  _atom_site_fract_y
+  _atom_site_fract_z
+  _atom_site_occupancy
+  Au1  Au  0.0  0.0  0.0  0.5
+  Ag1  Ag  0.0  0.0  0.0  0.5
+  Cu1  Cu  0.5  0.5  0.5  0.3
