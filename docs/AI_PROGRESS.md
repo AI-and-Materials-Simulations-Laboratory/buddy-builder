@@ -108,5 +108,6 @@ Bug: "3 nm graphene oxide sheet" got 12 ligands, because reset() restores the la
 - Also fixed: the console now accepts carbon(kind="graphene oxide") (synonyms added); the checker resolves picker names ("Gold nanorod - [001] axis") and carbon-kind synonyms, so there are no false repairs. Tests: 276 passed.
 
 ## Repo (user request 8): create a buddy-builder repo with the whole folder
-- [ ] git init in buddy-builder; make sure .env/.venv/caches are ignored; scan for secrets
-- [ ] gh repo create AI-and-Materials-Simulations-Laboratory/buddy-builder --private, then push main (no Claude co-author)
+- [x] git init in buddy-builder; make sure .env/.venv/caches are ignored; scan for secrets
+- [x] gh repo create AI-and-Materials-Simulations-Laboratory/buddy-builder --private, then push main (no Claude co-author)
+- Pushed: https://github.com/AI-and-Materials-Simulations-Laboratory/buddy-builder (private, main, commit 11bcbfe, 520 files; .env is not in the repo).
