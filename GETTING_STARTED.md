@@ -12,7 +12,7 @@ Setup takes about 5 minutes, and the tour after it takes another 5.
 
 ## 1. Install (once)
 
-You need `git` and either **Python 3.12** (3.11 to 3.13 also work) or [uv](https://docs.astral.sh/uv/), which downloads Python for you. The setup uses about 500 MB of disk space.
+You need `git` and either **Python 3.12** (3.13 also works) or [uv](https://docs.astral.sh/uv/), which downloads Python for you. The setup uses about 500 MB of disk space.
 
 **macOS / Linux**
 ```

@@ -16,14 +16,14 @@ if command -v uv >/dev/null 2>&1; then
   uv pip install --python .venv/bin/python -r requirements.txt
 else
   PY=""
-  for c in python3.12 python3.13 python3.11 python3 python; do
+  for c in python3.12 python3.13 python3 python; do
     if command -v "$c" >/dev/null 2>&1 && \
-       "$c" -c 'import sys; sys.exit(0 if (3, 11) <= sys.version_info[:2] <= (3, 13) else 1)' 2>/dev/null; then
+       "$c" -c 'import sys; sys.exit(0 if (3, 12) <= sys.version_info[:2] <= (3, 13) else 1)' 2>/dev/null; then
       PY="$c"; break
     fi
   done
   if [ -z "$PY" ]; then
-    echo "Python 3.11 to 3.13 is needed (3.12 recommended)."
+    echo "Python 3.12 or 3.13 is needed (the pinned NumPy 2.5 requires 3.12+)."
     echo "  Install Python: https://www.python.org/downloads/"
     echo "  or install uv (it fetches Python for you): curl -LsSf https://astral.sh/uv/install.sh | sh"
     exit 1

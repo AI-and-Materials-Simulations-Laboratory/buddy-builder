@@ -122,3 +122,8 @@ Bug: "3 nm graphene oxide sheet" got 12 ligands, because reset() restores the la
 - [x] AI key box in the UI (user request 10): provider/model/password + Connect (a test call); session-only by default, optional save to .env; the key is never shown or logged
 - [x] Pushed and made the repo public (secret scan of all 5 commits: only fake test keys)
 - Key box tested in a browser on a fresh clone with no key: the badge said offline; a wrong key was rejected with a clear message; the real key connected (the badge changed to gpt-6-luna); the key is not in the page HTML; the AI answered. 279 tests passed.
+
+## README (user request 11): neat, professional, open-source style
+- [x] New README: centred header, badges, screenshot (docs/images/screenshot.png), features, quick start, usage, outputs (real file names), a mermaid diagram of Ask Buddy, layout, testing, docs index, limitations, contributing, license table, acknowledgements
+- [x] Detail moved, not lost: docs/INSTALL.md (manual, conda, Windows, Jupyter, nanoHUB, CLI, troubleshooting), docs/USER_GUIDE.md (all options), CONTRIBUTING.md
+- [x] Python version made consistent at 3.12+ (NumPy 2.5 pin): setup.sh, GETTING_STARTED, pyproject requires-python
