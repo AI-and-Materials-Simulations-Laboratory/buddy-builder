@@ -31,7 +31,7 @@ from dataclasses import dataclass, field
 from ..schema import BuilderError
 from . import rules
 from .knowledge import default_kb
-from .provider import DisabledProvider, Provider, ProviderError, from_env
+from .provider import DisabledProvider, Provider, ProviderError, from_env, scrub
 
 # Commands a plan may contain. Setup commands are checked on the hidden app;
 # model commands act on the current build and are only syntax-checked.
@@ -577,7 +577,7 @@ class Assistant:
                 return plan
             except (ProviderError, ValueError, KeyError, TypeError) as exc:
                 plan = Plan(request=request, mode="offline", model="offline parser (AI unavailable)")
-                plan.notes.append(f"AI model unavailable ({str(exc)[:160]}); used the offline parser")
+                plan.notes.append(f"AI model unavailable ({scrub(str(exc))[:160]}); used the offline parser")
         plan = self._ask_offline(plan, app)
         self._note_defaults(plan)
         return plan
@@ -615,7 +615,7 @@ class Assistant:
                 return self._answer_ai(plan, app)
             except (ProviderError, ValueError) as exc:
                 plan.mode, plan.model = "offline", "offline parser (AI unavailable)"
-                plan.notes.append(f"AI model unavailable ({str(exc)[:160]})")
+                plan.notes.append(f"AI model unavailable ({scrub(str(exc))[:160]})")
         return self._answer_offline(plan, app)
 
     # -------------------------------------------------------------- AI path

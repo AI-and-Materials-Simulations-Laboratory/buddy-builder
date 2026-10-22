@@ -208,6 +208,63 @@ def _env(*names, default=None):
     return default
 
 
+KEY_PATTERN = __import__("re").compile(r"(sk-[A-Za-z0-9_\-]{4})[A-Za-z0-9_\-*]+")
+
+
+def scrub(text: str) -> str:
+    """Hide anything that looks like an API key in a message shown to the user."""
+    return KEY_PATTERN.sub(r"\1...", str(text))
+
+
+def make_provider(kind: str, api_key: str, model: str = "", base_url: str = "") -> Provider:
+    """A provider from values typed in the app (the key stays in memory only)."""
+    api_key = (api_key or "").strip()
+    if not api_key:
+        return DisabledProvider("No API key given")
+    if kind == "anthropic":
+        return AnthropicProvider(api_key, model.strip() or DEFAULT_ANTHROPIC_MODEL,
+                                 base_url.strip() or "https://api.anthropic.com/v1")
+    return OpenAICompatibleProvider(api_key, model.strip() or DEFAULT_OPENAI_MODEL,
+                                    base_url.strip() or "https://api.openai.com/v1")
+
+
+def check_provider(provider: Provider) -> str:
+    """'' when the key and model work (one tiny call), else the reason, with keys hidden."""
+    try:
+        provider.complete("Reply with the JSON object {} and nothing else.", "ping", max_tokens=64)
+        return ""
+    except ProviderError as exc:
+        msg = scrub(exc)
+        if " 401" in msg or "invalid_api_key" in msg or "authentication" in msg.lower():
+            return "The key was rejected (check it was copied whole, and that it is active)."
+        if " 404" in msg or "model" in msg.lower() and "not" in msg.lower():
+            return f"The model name was not accepted: {msg[:200]}"
+        return msg[:300]
+
+
+def save_to_dotenv(values: dict, path=None) -> Path:
+    """Write settings into .env (other lines are kept); the file is made private (0600)."""
+    path = Path(path or TOOL_DIR / ".env")
+    lines = path.read_text(encoding="utf-8").splitlines() if path.is_file() else []
+    done = set()
+    out = []
+    for line in lines:
+        key = line.split("=", 1)[0].strip().removeprefix("export ").strip() if "=" in line else ""
+        if key in values:
+            if key not in done:
+                out.append(f"{key}={values[key]}")
+                done.add(key)
+            continue
+        out.append(line)
+    out += [f"{k}={v}" for k, v in values.items() if k not in done]
+    path.write_text("\n".join(out) + "\n", encoding="utf-8")
+    try:
+        path.chmod(0o600)
+    except OSError:
+        pass
+    return path
+
+
 def from_env() -> Provider:
     """The provider the environment (or .env) asks for; Disabled when there is no key."""
     load_dotenv()
@@ -236,4 +293,4 @@ def from_env() -> Provider:
 
 __all__ = ["Provider", "ProviderResponse", "ProviderError", "DisabledProvider",
            "OpenAICompatibleProvider", "AnthropicProvider", "FixtureProvider", "from_env",
-           "load_dotenv"]
+           "load_dotenv", "make_provider", "check_provider", "save_to_dotenv", "scrub"]

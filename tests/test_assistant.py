@@ -356,3 +356,58 @@ def test_apply_reuses_the_checked_build():
         gui.run_pipeline = real
     assert a.result is not None and a.result.assembly.achieved_ligands == 10
     assert calls == []  # the live app did not build a second time
+
+
+# ------------------------------------------------------------------ AI key box
+
+def test_key_box_connects_without_keeping_or_showing_the_key(monkeypatch, tmp_path):
+    a = BuilderApp()
+    a.assistant.assistant = offline()
+    chat = a.assistant
+    seen = []
+
+    def fake_complete(self, system, user, max_tokens=1500):
+        seen.append(self._key)
+        return prov.ProviderResponse("{}", self.model)
+
+    monkeypatch.setattr(prov.OpenAICompatibleProvider, "complete", fake_complete)
+    monkeypatch.setattr(prov, "TOOL_DIR", tmp_path)
+    secret = "sk-test-abcdefghijklmnop1234567890"
+    chat.toggle_key_box()
+    assert chat.key_box.layout.display == ""
+    chat.key_input.value = secret
+    chat.key_save.value = True
+    assert chat.connect()
+    assert seen == [secret] and chat.assistant.live
+    assert chat.key_input.value == ""  # not kept in the widget
+    shown = chat.badge.value + chat.key_status.value + chat.transcript.value
+    assert secret not in shown and "gpt-6-luna" in chat.badge.value
+    env = (tmp_path / ".env").read_text()
+    assert f"BUDDY_LLM_API_KEY={secret}" in env and (tmp_path / ".env").stat().st_mode & 0o077 == 0
+    chat.forget_key()
+    assert not chat.assistant.live
+
+
+def test_rejected_key_is_reported_and_not_used(monkeypatch):
+    a = BuilderApp()
+    a.assistant.assistant = offline()
+
+    def bad(self, *args, **kw):
+        raise prov.ProviderError("Model API error 401: Incorrect API key provided: sk-test-abcdefghijk")
+
+    monkeypatch.setattr(prov.OpenAICompatibleProvider, "complete", bad)
+    a.assistant.key_input.value = "sk-test-abcdefghijk"
+    assert not a.assistant.connect()
+    assert not a.assistant.assistant.live
+    assert "rejected" in a.assistant.key_status.value
+    assert "abcdefghijk" not in a.assistant.key_status.value
+
+
+def test_save_to_dotenv_replaces_existing_lines(tmp_path):
+    env = tmp_path / ".env"
+    env.write_text("# mine\nBUDDY_LLM_API_KEY=old\nOTHER=1\n")
+    prov.save_to_dotenv({"BUDDY_LLM_API_KEY": "new", "BUDDY_LLM_MODEL": "m"}, env)
+    text = env.read_text()
+    assert "BUDDY_LLM_API_KEY=new" in text and "old" not in text and "OTHER=1" in text
+    assert "BUDDY_LLM_MODEL=m" in text and text.startswith("# mine")
+    assert prov.scrub("key sk-proj-ABCDEFGHIJKLMNOP done") == "key sk-proj... done"

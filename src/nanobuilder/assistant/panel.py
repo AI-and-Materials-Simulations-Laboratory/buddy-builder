@@ -19,6 +19,7 @@ import traceback
 
 import ipywidgets as w
 
+from . import provider as prov
 from .agents import ON_MODEL, SETUP, Assistant, Plan, command_name, split_commands
 
 MAX_TURNS = 30
@@ -41,6 +42,10 @@ EXAMPLES = [
 
 def _esc(text) -> str:
     return html.escape(str(text))
+
+
+def _msg_html(kind: str, text: str) -> str:
+    return f"<div class='nb-msg nb-msg-{kind}'><ul><li>{_esc(text)}</li></ul></div>"
 
 
 class AssistantPanel:
@@ -79,16 +84,21 @@ class AssistantPanel:
                                   layout=w.Layout(width="auto"))
         self.examples = w.Dropdown(options=EXAMPLES, value="",
                                    layout=w.Layout(width="auto", max_width="260px"))
+        self.key_btn = w.Button(description="AI key", icon="key",
+                                tooltip="Paste an OpenAI (or Anthropic) API key to use an AI model",
+                                layout=w.Layout(width="auto"))
+        self.key_box = self._key_settings()
         send_row = w.HBox([self.input, self.send_btn],
                           layout=w.Layout(align_items="flex-start", margin="4px 0 0"))
         send_row.add_class("bb-chat-row")
-        tools = w.HBox([self.auto, self.apply_btn, self.explain_btn, self.clear_btn, self.examples],
+        tools = w.HBox([self.auto, self.apply_btn, self.explain_btn, self.clear_btn, self.key_btn,
+                        self.examples],
                        layout=w.Layout(flex_flow="row wrap", align_items="center", grid_gap="6px",
                                        margin="4px 0 0"))
         head = w.HBox([w.HTML("<div class='nb-h bb-chat-h'>Ask Buddy</div>"), self.badge],
                       layout=w.Layout(justify_content="space-between", align_items="center",
                                       flex_flow="row wrap"))
-        self.box = w.VBox([head, self.transcript, send_row, tools],
+        self.box = w.VBox([head, self.key_box, self.transcript, send_row, tools],
                           layout=w.Layout(margin="0 0 10px"))
         self.box.add_class("bb-chat")
 
@@ -109,16 +119,108 @@ class AssistantPanel:
         self.clear_btn.on_click(self._safe(lambda _: self.clear()))
         self.examples.observe(self._on_example, names="value")
         self.console_ai.on_click(self._safe(lambda _: self.code_from_text()))
+        self.key_btn.on_click(self._safe(lambda _: self.toggle_key_box()))
+        self.key_connect.on_click(self._safe(lambda _: self.connect()))
+        self.key_forget.on_click(self._safe(lambda _: self.forget_key()))
+        self.key_kind.observe(self._on_key_kind, names="value")
         self.console_test.on_click(self._safe(lambda _: self.test_code()))
         self._sending = False
         self._refresh_badge()
-        self._say("buddy", WELCOME)
+        self._say("buddy", WELCOME + ("" if self.assistant.live else
+                                      "<br><small>No AI model yet: common requests still work. "
+                                      "For free-form requests and questions, click <b>AI key</b> "
+                                      "and paste an OpenAI key.</small>"))
+
+    # ------------------------------------------------------------------ AI key
+    def _key_settings(self):
+        """Provider, model and key fields; the key is kept in memory for this session only,
+        unless 'Save' is ticked (then it goes to .env on this computer)."""
+        self.key_kind = w.Dropdown(options=[("OpenAI", "openai_compatible"), ("Anthropic (Claude)", "anthropic")],
+                                   value="openai_compatible", description="Provider",
+                                   style={"description_width": "70px"},
+                                   layout=w.Layout(width="auto", max_width="260px"))
+        self.key_model = w.Text(value=prov.DEFAULT_OPENAI_MODEL, description="Model",
+                                style={"description_width": "50px"},
+                                layout=w.Layout(width="auto", max_width="240px"))
+        self.key_input = w.Password(placeholder="Paste your API key (sk-...)",
+                                    layout=w.Layout(width="auto", flex="1 1 auto"))
+        self.key_input.add_class("bb-key-input")
+        self.key_connect = w.Button(description="Connect", icon="plug", button_style="primary",
+                                    tooltip="Check the key with one tiny request, then use it",
+                                    layout=w.Layout(width="auto", flex="0 0 auto"))
+        self.key_forget = w.Button(description="Forget", icon="times",
+                                   tooltip="Stop using the key in this session",
+                                   layout=w.Layout(width="auto", flex="0 0 auto"))
+        self.key_save = w.Checkbox(value=False, indent=False,
+                                   description="Remember on this computer (saves to .env)",
+                                   tooltip="Only on your own computer; never on a shared server",
+                                   layout=w.Layout(width="auto"))
+        self.key_status = w.HTML("<small>The key stays in this browser session's memory and is never "
+                                 "shown, logged or exported. Get an OpenAI key at "
+                                 "<a href='https://platform.openai.com/api-keys' target='_blank' "
+                                 "rel='noopener'>platform.openai.com/api-keys</a>.</small>")
+        box = w.VBox([w.HBox([self.key_kind, self.key_model],
+                             layout=w.Layout(flex_flow="row wrap", grid_gap="6px")),
+                      w.HBox([self.key_input, self.key_connect, self.key_forget],
+                             layout=w.Layout(align_items="center", grid_gap="6px")),
+                      self.key_save, self.key_status],
+                     layout=w.Layout(display="none", margin="2px 0 8px"))
+        box.add_class("bb-key-box")
+        return box
+
+    def toggle_key_box(self):
+        self.key_box.layout.display = "" if self.key_box.layout.display == "none" else "none"
+
+    def _on_key_kind(self, change):
+        defaults = {"openai_compatible": prov.DEFAULT_OPENAI_MODEL, "anthropic": prov.DEFAULT_ANTHROPIC_MODEL}
+        if self.key_model.value in defaults.values() or not self.key_model.value.strip():
+            self.key_model.value = defaults[change["new"]]
+        self.key_input.placeholder = ("Paste your API key (sk-ant-...)" if change["new"] == "anthropic"
+                                      else "Paste your API key (sk-...)")
+
+    def connect(self) -> bool:
+        """Check the pasted key with one tiny call and, if it works, use it for this session."""
+        key = (self.key_input.value or "").strip()
+        self.key_input.value = ""  # never keep the key in the widget
+        if not key:
+            self.key_status.value = _msg_html("warning", "Paste a key first.")
+            return False
+        self.key_connect.disabled = True
+        self.key_status.value = "<small><span class='bb-dots'>Checking the key</span></small>"
+        try:
+            candidate = prov.make_provider(self.key_kind.value, key, self.key_model.value)
+            problem = prov.check_provider(candidate)
+        finally:
+            self.key_connect.disabled = False
+        if problem:
+            self.key_status.value = _msg_html("error", f"Not connected: {problem}")
+            return False
+        self.assistant.provider = candidate
+        self._refresh_badge()
+        saved = ""
+        if self.key_save.value:
+            path = prov.save_to_dotenv({"BUDDY_LLM_PROVIDER": self.key_kind.value,
+                                        "BUDDY_LLM_API_KEY": key,
+                                        "BUDDY_LLM_MODEL": candidate.model})
+            saved = f" Saved to {path.name} on this computer (git ignores it)."
+        self.key_status.value = _msg_html("ok", f"Connected: {candidate.model}. Ask Buddy now uses this "
+                                                f"model.{saved}")
+        self.key_box.layout.display = "none"
+        self._say("buddy", f"AI connected ({_esc(candidate.model)}). Ask me anything about building your model.")
+        return True
+
+    def forget_key(self):
+        self.assistant.provider = prov.DisabledProvider("Key removed for this session")
+        self.key_input.value = ""
+        self._refresh_badge()
+        self.key_status.value = _msg_html("info", "Key forgotten for this session; the offline parser is used. "
+                                                  "(A key saved in .env is used again next start.)")
 
     # ------------------------------------------------------------------ display
     def _refresh_badge(self):
         a = self.assistant
         kind = "ai" if a.live else "off"
-        text = f"AI: {a.label()}" if a.live else "Offline parser (no AI key)"
+        text = f"AI: {a.label()}" if a.live else "Offline parser (add an AI key)"
         tip = ("Plans come from the model, then a deterministic check on a hidden copy of Buddy"
                if a.live else getattr(a.provider, "reason", "") or "No AI model configured")
         self.badge.value = f"<span class='bb-badge bb-badge-{kind}' title='{_esc(tip)}'>{_esc(text)}</span>"
@@ -137,8 +239,8 @@ class AssistantPanel:
                 fn(*args)
             except Exception as exc:  # never break the app; show the error in the chat
                 self._say("buddy", f"<div class='nb-msg nb-msg-error'><ul><li>Something went wrong: "
-                                   f"{_esc(exc)}</li></ul></div><details><summary>Details</summary>"
-                                   f"<pre>{_esc(traceback.format_exc())}</pre></details>")
+                                   f"{_esc(prov.scrub(exc))}</li></ul></div><details><summary>Details"
+                                   f"</summary><pre>{_esc(prov.scrub(traceback.format_exc()))}</pre></details>")
                 self.send_btn.disabled = False
         return run
 
