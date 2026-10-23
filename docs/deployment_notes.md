@@ -51,7 +51,8 @@ and have not been tested on nanoHUB.
 8. Verify `middleware/invoke`: `-u anaconda-6` and the `start_jupyter -A`
    AppMode flag are illustrative and must match the hosted environment.
 9. Move through Uploaded → Installed → Approved → Published with the nanoHUB
-   tool administrators. Choose a license first (see `LICENSE`).
+   tool administrators. The tool is MIT-licensed (see `LICENSE`); the `HierGO-master/`
+   reference folder keeps its own GPL-3.0 license.
 
 If SVN or Jupyter registration is unavailable, do not work around platform
 controls: demo from a local Jupyter session and hand over a ZIP of this folder

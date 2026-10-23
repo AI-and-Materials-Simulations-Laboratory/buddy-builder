@@ -127,3 +127,6 @@ Bug: "3 nm graphene oxide sheet" got 12 ligands, because reset() restores the la
 - [x] New README: centred header, badges, screenshot (docs/images/screenshot.png), features, quick start, usage, outputs (real file names), a mermaid diagram of Ask Buddy, layout, testing, docs index, limitations, contributing, license table, acknowledgements
 - [x] Detail moved, not lost: docs/INSTALL.md (manual, conda, Windows, Jupyter, nanoHUB, CLI, troubleshooting), docs/USER_GUIDE.md (all options), CONTRIBUTING.md
 - [x] Python version made consistent at 3.12+ (NumPy 2.5 pin): setup.sh, GETTING_STARTED, pyproject requires-python
+
+## License (user request 12)
+- [x] MIT (Copyright 2026 AI and Materials Simulations Laboratory); README badge and section, pyproject, deployment notes updated; HierGO-master stays GPL-3.0

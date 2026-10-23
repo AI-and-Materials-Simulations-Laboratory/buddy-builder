@@ -10,7 +10,7 @@
 [![Tests](https://img.shields.io/badge/tests-279%20passing-2E7D55)](#testing)
 [![Exports](https://img.shields.io/badge/exports-LAMMPS%20·%20HOOMD%20·%20AMBER%20·%20GROMACS-8A5A00)](#outputs)
 [![AI](https://img.shields.io/badge/AI-OpenAI%20·%20Claude%20·%20offline-6E56CF)](docs/ai_assistant.md)
-[![License](https://img.shields.io/badge/license-not%20yet%20chosen-lightgrey)](#license)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
 [Getting started](GETTING_STARTED.md) ·
 [User guide](docs/USER_GUIDE.md) ·
@@ -232,7 +232,7 @@ Issues and pull requests are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for
 
 ## License
 
-**Not chosen yet.** The project team will choose a license before publishing on nanoHUB; until then, see [LICENSE](LICENSE).
+Buddy Builder is released under the [MIT License](LICENSE).
 
 Third-party components keep their own licenses:
 
@@ -243,7 +243,7 @@ Third-party components keep their own licenses:
 | GSD | BSD-2-Clause |
 | Fredoka font | SIL OFL |
 | Materials Project data | CC BY 4.0 |
-| `HierGO-master/` (reference only) | GPL-3.0 |
+| `HierGO-master/` (reference only; not part of the MIT-licensed code) | GPL-3.0 |
 
 The carbon builder re-implements HierGO's algorithms and does not copy its code. The HierGO hole library is read from `HierGO-master/` at run time and is not bundled into the package or into exports. Set `NANOBUILDER_HOLE_LIBRARY` to read it from another location.
 
