@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+message: "If you use Buddy Builder, please cite it as below."
+title: "Buddy Builder: ligand-coated nanostructures for molecular dynamics, with the Ask Buddy AI assistant"
+type: software
+authors:
+  - given-names: "Christina"
+    family-names: "Bayard"
+    affiliation: "AIMS Lab, NC State University"
+  - given-names: "Merve"
+    family-names: "Fedai"
+    affiliation: "AIMS Lab, NC State University"
+  - given-names: "Deepak Sai"
+    family-names: "Pendyala"
+    affiliation: "AIMS Lab, NC State University"
+  - given-names: "Andrew"
+    family-names: "Cannon"
+    affiliation: "AIMS Lab, NC State University"
+  - given-names: "Patrick"
+    family-names: "Hogsed"
+    affiliation: "AIMS Lab, NC State University"
+  - given-names: "Sergei"
+    family-names: "Rigin"
+    affiliation: "AIMS Lab, NC State University"
+license: MIT
+repository-code: "https://github.com/AI-and-Materials-Simulations-Laboratory/buddy-builder"
+version: "0.1.0"
+date-released: "2026-10-22"
+keywords: [nanoparticles, ligands, molecular dynamics, LAMMPS, HOOMD-blue, graphene oxide, nanoHUB]

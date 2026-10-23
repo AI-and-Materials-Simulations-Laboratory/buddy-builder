@@ -130,3 +130,4 @@ Bug: "3 nm graphene oxide sheet" got 12 ligands, because reset() restores the la
 
 ## License (user request 12)
 - [x] MIT (Copyright 2026 AI and Materials Simulations Laboratory); README badge and section, pyproject, deployment notes updated; HierGO-master stays GPL-3.0
+- [x] Team credited (user request 13): LICENSE copyright, README Team section, pyproject authors, CITATION.cff

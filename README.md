@@ -226,13 +226,20 @@ One more test checks LAMMPS `read_data` when `LAMMPS_EXE` points to a LAMMPS exe
 
 The full lists are in [docs/scientific_assumptions.md](docs/scientific_assumptions.md) and [docs/carbon_materials.md](docs/carbon_materials.md).
 
+## Team
+
+**Best Budding Buddy Builders Buddy Building Buddy Builder**: AIMS Lab, NC State University
+
+Christina Bayard · Merve Fedai · Deepak Sai Pendyala · Andrew Cannon · Patrick Hogsed · Sergei Rigin
+
 ## Contributing
 
 Issues and pull requests are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for the development setup and conventions.
 
 ## License
 
-Buddy Builder is released under the [MIT License](LICENSE).
+Buddy Builder is released under the [MIT License](LICENSE). Copyright 2026 the Buddy Builder team (see [Team](#team)).
+To cite it, use GitHub's **Cite this repository** button, which reads [CITATION.cff](CITATION.cff).
 
 Third-party components keep their own licenses:
 
@@ -252,4 +259,4 @@ The carbon builder re-implements HierGO's algorithms and does not copy its code.
 - **Materials Project:** A. Jain *et al.*, *APL Materials* **1**, 011002 (2013).
 - **HierGO:** Garcia *et al.*, *2D Materials* **10**, 025007 (2023).
 - Built with [ASE](https://wiki.fysik.dtu.dk/ase/), [RDKit](https://www.rdkit.org/), [GSD](https://gsd.readthedocs.io/), [3Dmol.js](https://3dmol.csb.pitt.edu/), [ipywidgets](https://ipywidgets.readthedocs.io/) and [Voila](https://voila.readthedocs.io/).
-- Developed by the AI and Materials Simulations Laboratory team for nanoHUB.
+- Developed by the team above at the AIMS Lab, NC State University, for nanoHUB.
